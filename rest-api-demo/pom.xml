@@ -41,7 +41,13 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- MONITORING -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
+		<!--TESTING SUPPORT -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
