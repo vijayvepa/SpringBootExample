@@ -1,0 +1,1 @@
+http :8080/actuator/loggers/org.springframework.data.web < loggingLevel.json
