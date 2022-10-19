@@ -1,5 +1,6 @@
 package com.vijayvepa.restapidemo.controllers;
 
+import com.vijayvepa.restapidemo.dataaccess.CoffeeRepository;
 import com.vijayvepa.restapidemo.model.Coffee;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +12,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 @RestController
 public class CoffeeController {
-    private final List<Coffee> coffeeList = new ArrayList<>();
+    private final CoffeeRepository coffeeRepository;
 
-    public CoffeeController() {
-        coffeeList.addAll(List.of(
+    public CoffeeController(CoffeeRepository coffeeRepository) {
+        this.coffeeRepository = coffeeRepository;
+
+        this.coffeeRepository.saveAll(List.of(
                 new Coffee("Café Cereza", "9a5393b1-9e2c-4204-9605-bf36e90f65ee"),
                 new Coffee("Café Ganador", "4bb01dd0-b26b-44f6-ac7b-1d08ffb6c97b"),
                 new Coffee("Café Lareño", "10cec660-08e6-40c9-b7f0-f6676238128d"),
@@ -31,18 +34,17 @@ public class CoffeeController {
 
     @GetMapping(value = "/coffees")
     Iterable<Coffee> getCoffees() {
-        return coffeeList;
+        return coffeeRepository.findAll();
     }
 
     @GetMapping(value = "/coffees/{id}")
     Optional<Coffee> getCoffee(@PathVariable String id) {
-        return coffeeList.stream().filter(c -> Objects.equals(c.getId(), id)).findFirst();
+        return coffeeRepository.findById(id);
     }
 
     @PostMapping("/coffees")
     Coffee postCoffee(@RequestBody Coffee coffee) {
-        coffeeList.add(coffee);
-        return coffee;
+      return   coffeeRepository.save(coffee);
     }
 
     @PutMapping("/coffees/{id}")
@@ -51,18 +53,20 @@ public class CoffeeController {
             @RequestBody Coffee coffee) {
 
         if (!Objects.equals(id, coffee.getId())) {
-            return new ResponseEntity<>(coffee, HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<>(coffee, HttpStatus.BAD_REQUEST);
         }
 
-        final boolean exists = coffeeList.removeIf(x -> Objects.equals(x.getId(), id));
-        coffeeList.add(coffee);
+        final boolean exists = coffeeRepository.existsById(id);
 
-        return exists ? new ResponseEntity<>(coffee, HttpStatus.OK) : new ResponseEntity<>(coffee, HttpStatus.CREATED);
+        final Coffee savedCoffee = coffeeRepository.save(coffee);
+
+
+        return exists ? new ResponseEntity<>(savedCoffee, HttpStatus.OK) : new ResponseEntity<>(savedCoffee, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/coffees/{id}")
     void deleteCoffee(@PathVariable String id) {
-        coffeeList.removeIf(c -> Objects.equals(c.getId(), id));
+        coffeeRepository.deleteById(id);
     }
 
 }
