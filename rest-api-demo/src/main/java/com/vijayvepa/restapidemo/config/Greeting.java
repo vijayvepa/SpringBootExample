@@ -7,6 +7,11 @@ public class Greeting {
     private String name;
     private String coffee;
 
+    public Greeting(){
+        name = "Mirage";
+        coffee = name + " is drinking coffee";
+    }
+
     public String getName() {
         return name;
     }
