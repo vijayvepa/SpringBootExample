@@ -2,3 +2,4 @@ rootProject.name = 'aircraft-demo'
 
 include 'plane-finder'
 include 'plane-reporter'
+include 'plane-reporter-v2'
