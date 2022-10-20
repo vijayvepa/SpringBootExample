@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfiguration {
 
     @Bean
-    public RedisOperations<String, Aircraft> redisOperations(RedisConnectionFactory redisConnectionFactory){
+    public RedisOperations<String, Aircraft> redisOperations(RedisConnectionFactory redisConnectionFactory) {
 
         Jackson2JsonRedisSerializer<Aircraft> serializer = new Jackson2JsonRedisSerializer<>(Aircraft.class);
 

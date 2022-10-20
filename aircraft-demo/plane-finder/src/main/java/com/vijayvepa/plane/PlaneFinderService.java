@@ -40,7 +40,7 @@ public class PlaneFinderService {
         } catch (IOException e) {
             System.out.println(
                     "\n>>> IO Exception: " + e.getLocalizedMessage() +
-                    ", generating and providing sample data.\n");
+                            ", generating and providing sample data.\n");
             return saveSamplePositions();
         }
 

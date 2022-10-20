@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,9 +52,16 @@ public class Aircraft {
     @JsonProperty("bds40_seen_time")
     private Instant bds40SeenTime;
 
-    public Aircraft(String callsign, String reg, String flightno, String type,
-                    int altitude, int heading, int speed,
-                    double lat, double lon) {
+    public Aircraft(
+            String callsign,
+            String reg,
+            String flightno,
+            String type,
+            int altitude,
+            int heading,
+            int speed,
+            double lat,
+            double lon) {
 
         this(null, callsign, "sqwk", reg, flightno, "route", type, "ct",
                 altitude, heading, speed, 0, 0,

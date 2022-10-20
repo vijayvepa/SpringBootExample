@@ -59,7 +59,7 @@ public class Aircraft {
         setInstantOrDefault(lastSeenTime, this::setLastSeenTimeInstant);
     }
 
-    public void setLastSeenTimeInstant(Instant lastSeenTime){
+    public void setLastSeenTimeInstant(Instant lastSeenTime) {
         this.lastSeenTime = lastSeenTime;
     }
 
@@ -81,7 +81,7 @@ public class Aircraft {
         setInstantOrDefault(posUpdateTime, this::setPosUpdateTimeInstant);
     }
 
-    public void setPosUpdateTimeInstant(Instant posUpdateTime){
+    public void setPosUpdateTimeInstant(Instant posUpdateTime) {
         this.posUpdateTime = posUpdateTime;
     }
 
@@ -93,7 +93,7 @@ public class Aircraft {
         setInstantOrDefault(posUpdateTime, this::setBds40SeenTimeInstant);
     }
 
-    public void setBds40SeenTimeInstant(Instant bds40SeenTime){
+    public void setBds40SeenTimeInstant(Instant bds40SeenTime) {
         this.bds40SeenTime = bds40SeenTime;
     }
 
