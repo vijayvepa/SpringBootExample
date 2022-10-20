@@ -43,7 +43,7 @@ public class PlaneFinderPoller {
                 .getOperations()
                 .keys("*")
 
-                .forEach(aircraft-> System.out.println(redisOperations.opsForValue().get(aircraft)));
+                .forEach(reg-> System.out.println(redisOperations.opsForValue().get(reg)));
     }
 }
 
