@@ -1,4 +1,4 @@
-package com.vijayvepa.planereporterneo4j;
+package com.vijayepa.aircraft.v2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
