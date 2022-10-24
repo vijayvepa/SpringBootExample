@@ -1,11 +1,25 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Positions Report</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+<head>
+    <title>Positions Report</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
 
 <body>
+
+<script type="text/javascript">
+    window.onload = setupRefresh;
+
+    function setupRefresh(){
+        setTimeout("refreshPage();", 5000); //refresh rate in milliseconds
+    }
+
+    function refreshPage(){
+        window.location = location.href;
+    }
+
+</script>
+
 <div class="positionslist" th:unless="${#lists.isEmpty(currentPositions)}">
     <h2>Current Aircraft Positions</h2>
 
