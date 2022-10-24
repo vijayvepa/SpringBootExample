@@ -1,3 +1,4 @@
 rootProject.name = 'plane-reporter-mvc'
 
 include 'plane-reporter-mvc-pull'
+include 'plane-reporter-mvc-stream'
