@@ -1,1 +1,3 @@
 rootProject.name = 'plane-reporter-mvc'
+
+include 'plane-reporter-mvc-pull'
