@@ -1,7 +1,8 @@
 rootProject.name = 'aircraft-demo'
 
 include 'plane-finder'
+include 'plane-finder-rabbit-publish'
 include 'plane-reporter'
-include 'plane-reporter-v2'
 include 'plane-reporter-mysql'
 include 'plane-reporter-mysql-dataload'
+include 'plane-reporter-redis-repo'
