@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.h2database:h2'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
     implementation 'org.springframework.cloud:spring-cloud-stream'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
