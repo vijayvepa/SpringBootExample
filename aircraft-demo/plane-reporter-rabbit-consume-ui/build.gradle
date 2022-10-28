@@ -46,6 +46,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //endregion
 
+    //region websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    //endregion
+
     //region lombok
     //See https://stackoverflow.com/a/66981165/474377
     compileOnly 'org.projectlombok:lombok:1.18.20'
