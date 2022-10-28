@@ -7,3 +7,5 @@ include 'plane-reporter-mysql'
 include 'plane-reporter-mysql-dataload'
 include 'plane-reporter-redis-repo'
 include 'plane-reporter-rabbit-consume'
+
+include 'plane-reporter-rabbit-consume-ui'

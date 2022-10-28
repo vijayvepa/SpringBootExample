@@ -1,0 +1,62 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.vijayvepa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "2020.0.0")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+
+
+    //region db
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+    //endregion
+
+    //region stream processing
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
+    //endregion
+
+    //region ui
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //endregion
+
+    //region lombok
+    //See https://stackoverflow.com/a/66981165/474377
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    //endregion
+
+    //region Instant serialization
+    //see https://stackoverflow.com/a/66405182/474377
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    //endregion
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  //  testImplementation 'io.projectreactor:reactor-test'
+}

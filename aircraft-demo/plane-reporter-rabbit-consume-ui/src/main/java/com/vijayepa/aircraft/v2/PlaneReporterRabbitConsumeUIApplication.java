@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @SpringBootApplication
-public class PlaneReporterRabbitConsumerApplication {
+public class PlaneReporterRabbitConsumeUIApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PlaneReporterRabbitConsumerApplication.class, args);
+        SpringApplication.run(PlaneReporterRabbitConsumeUIApplication.class, args);
     }
 
     /**
