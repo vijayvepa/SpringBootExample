@@ -11,3 +11,4 @@ include 'plane-reporter-redis-repo'
 include 'plane-reporter-rabbit-consume'
 
 include 'plane-reporter-rabbit-consume-ui'
+include 'plane-reporter-reactive'
