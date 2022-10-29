@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,7 @@ public class PlaneFinderService {
         objectMapper = new ObjectMapper();
     }
 
-    public Iterable<Aircraft> getAircraft() {
+    public Flux<Aircraft> getAircraft() {
         List<Aircraft> positions = new ArrayList<>();
 
 
@@ -41,17 +42,17 @@ public class PlaneFinderService {
             System.out.println(
                     "\n>>> IO Exception: " + e.getLocalizedMessage() +
                             ", generating and providing sample data.\n");
-            return saveSamplePositions();
+            return planeRepository.deleteAll().thenMany(saveSamplePositions());
         }
 
         if (positions.size() > 0) {
             positions.forEach(System.out::println);
 
-            planeRepository.deleteAll();
-            return planeRepository.saveAll(positions);
+            return planeRepository.deleteAll()
+                    .thenMany(planeRepository.saveAll(positions));
         } else {
             System.out.println("\n>>> No positions to report, generating and providing sample data.\n");
-            return saveSamplePositions();
+            return planeRepository.deleteAll().thenMany(saveSamplePositions());
         }
     }
 
@@ -68,16 +69,12 @@ public class PlaneFinderService {
         });
     }
 
-    private Iterable<Aircraft> saveSamplePositions() {
+    private Flux<Aircraft> saveSamplePositions() {
         final Random rnd = new Random();
 
-        planeRepository.deleteAll();
-
-        for (int i = 0; i < rnd.nextInt(10); i++) {
-            planeRepository.save(flightGenerator.generate());
-        }
-
-        return planeRepository.findAll();
+        return Flux.range(1, rnd.nextInt(10))
+                .map(i-> flightGenerator.generate())
+                .flatMap(planeRepository::save);
     }
 }
 
