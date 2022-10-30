@@ -3,6 +3,7 @@ rootProject.name = 'aircraft-demo'
 include 'plane-finder'
 include 'plane-finder-rabbit-publish'
 include 'plane-finder-reactive'
+include 'plane-finder-rsocket'
 
 include 'plane-reporter'
 include 'plane-reporter-mysql'
@@ -12,3 +13,4 @@ include 'plane-reporter-rabbit-consume'
 
 include 'plane-reporter-rabbit-consume-ui'
 include 'plane-reporter-reactive'
+include 'plane-reporter-rsocket'
