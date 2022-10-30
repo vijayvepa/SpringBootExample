@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 
@@ -20,7 +19,6 @@ public class Aircraft {
      *  Cannot autogenerate id of type java.lang.Long for entity of type com.vijayepa.aircraft.v2.model.Aircraft!
      * @see <a href="https://stackoverflow.com/a/61693376/474377">StackOverflow</a>
      */
-    @Id
     private String id;
     private String callsign, squawk, reg, flightno, route, type, category;
 
