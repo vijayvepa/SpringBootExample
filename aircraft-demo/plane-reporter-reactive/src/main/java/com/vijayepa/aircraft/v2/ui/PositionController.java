@@ -40,12 +40,14 @@ public class PositionController {
      * @implNote
      * Error:
      * Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property or field 'callsign' cannot be found on object of type 'reactor.core.publisher.FluxConcatArray' - maybe not public or not valid?
+     * Fix:
+     * Remove spring-web, spring-test, rebuild
      */
     private static void populateModel(
             Model model,
             Flux<Aircraft> aircraftFlux) {
-        final List<Aircraft> aircraftList = aircraftFlux.toStream().collect(Collectors.toList());
-        model.addAttribute("currentPositions", aircraftList);
+       // final List<Aircraft> aircraftList = aircraftFlux.toStream().collect(Collectors.toList());
+        model.addAttribute("currentPositions", aircraftFlux);
     }
 }
 

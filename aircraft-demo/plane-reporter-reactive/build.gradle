@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.2'
+    id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
 }
@@ -11,16 +11,6 @@ sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
-}
-
-ext {
-    set('springCloudVersion', "2020.0.0")
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
 }
 
 dependencies {
@@ -37,24 +27,14 @@ dependencies {
 
     //region ui
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     //endregion
 
-    //region websocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    //endregion
 
     //region lombok
-    //See https://stackoverflow.com/a/66981165/474377
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     //endregion
 
-    //region Instant serialization
-    //see https://stackoverflow.com/a/66405182/474377
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    //endregion
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-  //  testImplementation 'io.projectreactor:reactor-test'
+    //testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
 }

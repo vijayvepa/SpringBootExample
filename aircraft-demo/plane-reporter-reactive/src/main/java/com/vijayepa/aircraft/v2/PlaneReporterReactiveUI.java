@@ -15,17 +15,4 @@ public class PlaneReporterReactiveUI {
         SpringApplication.run(PlaneReporterReactiveUI.class, args);
     }
 
-    /**
-     * @implNote See <a href="https://stackoverflow.com/a/66405182/474377">JavaTimeModule Issue</a>
-     * @param builder builder
-     * @return mapper
-     */
-
-    @Bean
-    @Primary
-    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper objectMapper = builder.build();
-        objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper;
-    }
 }
