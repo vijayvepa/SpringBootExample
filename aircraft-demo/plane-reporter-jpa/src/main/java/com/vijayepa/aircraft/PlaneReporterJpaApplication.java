@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PlaneFinderJpaApplication {
+public class PlaneReporterJpaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PlaneFinderJpaApplication.class, args);
+		SpringApplication.run(PlaneReporterJpaApplication.class, args);
 	}
 
 }
