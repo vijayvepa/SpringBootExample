@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 /**
+ * @implNote Ensure that PlaneFinder application is running
+ *
  * <p> No qualifying bean of type 'org.springframework.test.web.reactive.server.WebTestClient' available</p>
  * <p>Make sure RANDOM_PORT is selected</p>
  * <p><a href="https://stackoverflow.com/a/70623085/474377">StackOverflow</a></p>
@@ -19,7 +21,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient(timeout = "1200000")
-class PlaneControllerTest {
+class PlaneControllerIntegrationTest {
 
     @Autowired
     WebTestClient client;
