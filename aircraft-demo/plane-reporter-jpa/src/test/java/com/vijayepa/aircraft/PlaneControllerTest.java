@@ -15,7 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  *
  * <p><b></b>Timeout on blocking read for 5000000000 NANOSECONDS</b></p>
  * <p>@AutoConfigureWebTestClient(timeout=10000)</p>
- * <p> <a href="https://mkyong.com/spring-boot/spring-webflux-test-timeout-on-blocking-read-for-5000-milliseconds/>MKYong</a></p>
+ * <p> <a href="https://mkyong.com/spring-boot/spring-webflux-test-timeout-on-blocking-read-for-5000-milliseconds"/>MKYong</a></p>
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient(timeout = "1200000")
