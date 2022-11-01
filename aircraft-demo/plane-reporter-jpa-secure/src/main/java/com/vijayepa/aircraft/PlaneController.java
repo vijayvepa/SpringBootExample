@@ -16,4 +16,9 @@ public class PlaneController {
         return planeRetriever.retrieveAircraftPositions();
     }
 
+    @GetMapping("/aircraft-admin")
+    public Iterable<Aircraft> getCurrentAircraftPositionsWithAdmin() {
+        return planeRetriever.retrieveAircraftPositions();
+    }
+
 }
