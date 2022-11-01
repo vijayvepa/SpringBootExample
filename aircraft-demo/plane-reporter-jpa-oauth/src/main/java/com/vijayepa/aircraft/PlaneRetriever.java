@@ -2,8 +2,6 @@ package com.vijayepa.aircraft;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,14 +11,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 class PlaneRetriever {
     @NonNull
     private final AircraftRepository repository;
-    private WebClient client =
-            WebClient.create("http://localhost:7634");
+    private final WebClient client;
 
-    Iterable<Aircraft> retrieveAircraftPositions() {
+    Iterable<Aircraft> retrieveAircraftPositions(String path) {
         repository.deleteAll();
 
         client.get()
-                .uri("/aircraft")
+                .uri(null != path ? path : "")
                 .retrieve()
                 .bodyToFlux(Aircraft.class)
                 .filter(ac -> !ac.getReg().isEmpty())

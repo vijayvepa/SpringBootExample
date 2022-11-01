@@ -13,12 +13,12 @@ public class PlaneController {
 
     @GetMapping("/aircraft")
     public Iterable<Aircraft> getCurrentAircraftPositions() {
-        return planeRetriever.retrieveAircraftPositions();
+        return planeRetriever.retrieveAircraftPositions("aircraft");
     }
 
     @GetMapping("/aircraft-admin")
     public Iterable<Aircraft> getCurrentAircraftPositionsWithAdmin() {
-        return planeRetriever.retrieveAircraftPositions();
+        return planeRetriever.retrieveAircraftPositions("aircraft-admin");
     }
 
 }

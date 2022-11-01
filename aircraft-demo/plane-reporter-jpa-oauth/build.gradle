@@ -33,7 +33,8 @@ dependencies {
     //endregion
 
     //region security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-oauth2-client'
+    implementation 'com.okta.spring:okta-spring-boot-starter:2.1.6'
     //endregion
 
     //region domain

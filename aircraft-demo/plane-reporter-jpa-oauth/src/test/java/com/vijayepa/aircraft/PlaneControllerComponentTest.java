@@ -61,7 +61,7 @@ class PlaneControllerComponentTest {
 
     @Test
     void getCurrentAircraftPositions() {
-        Mockito.when(positionRetriever.retrieveAircraftPositions())
+        Mockito.when(positionRetriever.retrieveAircraftPositions("aircraft"))
                 .thenReturn(List.of(aircraft1, aircraft2));
         final Iterable<Aircraft> acPositions = client.get()
                 .uri("/aircraft")
