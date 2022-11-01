@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.4'
+    id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
     id 'java'
 }
@@ -19,12 +19,29 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.h2database:h2'
+    //region reactive-db
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'io.r2dbc:r2dbc-h2'
+    //endregion
+
+    //region reactive-web
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    //endregion
+
+
+    //region domain
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    //endregion
+
+    //region oauth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'com.okta.spring:okta-spring-boot-starter:2.1.6'
+    //endregion
+
+    //region test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //endregion
 }
 
 tasks.named('test') {

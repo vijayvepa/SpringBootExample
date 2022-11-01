@@ -3,28 +3,24 @@ package com.vijayvepa.plane;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.Instant;
-import java.util.Objects;
 
-@Entity
+
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Aircraft {
-    @Id
-    @GeneratedValue
+
     private Long id;
     private String callsign, squawk, reg, flightno, route, type, category;
 
@@ -82,16 +78,4 @@ public class Aircraft {
         this.bds40SeenTime = Instant.ofEpochSecond(bds40SeenTime);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Aircraft aircraft = (Aircraft) o;
-        return id != null && Objects.equals(id, aircraft.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

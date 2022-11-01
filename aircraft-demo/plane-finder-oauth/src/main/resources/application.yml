@@ -1,0 +1,7 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        issuer-uri: https://trial-7328584.okta.com/oauth2/v1/default
+
+# See https://github.com/spring-projects/spring-security/blob/5.4.1/samples/boot/oauth2login/README.adoc#okta-login
