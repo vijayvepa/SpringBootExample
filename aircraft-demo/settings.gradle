@@ -7,6 +7,7 @@ include 'plane-finder-rsocket'
 
 include 'plane-reporter'
 include 'plane-reporter-jpa'
+include 'plane-reporter-jpa-secure'
 include 'plane-reporter-mysql'
 include 'plane-reporter-mysql-dataload'
 include 'plane-reporter-redis-repo'
