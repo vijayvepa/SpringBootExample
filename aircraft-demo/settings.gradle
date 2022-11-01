@@ -4,6 +4,7 @@ include 'plane-finder'
 include 'plane-finder-rabbit-publish'
 include 'plane-finder-reactive'
 include 'plane-finder-rsocket'
+include 'plane-finder-oauth'
 
 include 'plane-reporter'
 include 'plane-reporter-jpa'
