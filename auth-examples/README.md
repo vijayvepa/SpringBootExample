@@ -1,0 +1,1 @@
+See https://developer.okta.com/blog/2019/05/31/spring-security-authentication#add-oauth-20--openid-connect-authentication

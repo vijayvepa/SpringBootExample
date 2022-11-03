@@ -1,0 +1,5 @@
+rootProject.name = 'auth-examples'
+
+include 'basic-auth'
+include 'forms-auth'
+include 'forms-custom'
