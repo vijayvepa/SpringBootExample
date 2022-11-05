@@ -34,6 +34,13 @@ public class PositionController {
         model.addAttribute("currentPositions", positionService.getAllAircraft());
         return "positions";
     }
+
+    @ResponseBody
+    @GetMapping("/acpos")
+    public Flux<Aircraft> getCurrentACPositions() {
+        return positionService.getAllAircraft();
+    }
+
     @ResponseBody
     @GetMapping(value = "/acstream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Aircraft> getCurrentAircraftPositionsStream(){
