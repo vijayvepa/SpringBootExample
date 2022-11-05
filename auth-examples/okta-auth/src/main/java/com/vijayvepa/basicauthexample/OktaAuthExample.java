@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FormsCustomAuthExample {
+public class OktaAuthExample {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FormsCustomAuthExample.class, args);
+		SpringApplication.run(OktaAuthExample.class, args);
 	}
 
 }
