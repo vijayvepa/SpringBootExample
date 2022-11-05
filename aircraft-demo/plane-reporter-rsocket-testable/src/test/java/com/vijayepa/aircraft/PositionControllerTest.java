@@ -15,12 +15,14 @@ import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.Instant;
 import java.util.UUID;
 
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = PositionController.class)
@@ -72,6 +74,7 @@ public class PositionControllerTest {
                 true, false,
                 Instant.now(), Instant.now(), Instant.now());
 
+        reset(positionService);
         when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3));
         when(positionService.getAircraftById(id1)).thenReturn(Mono.just(ac1));
         when(positionService.getAircraftById(id2)).thenReturn(Mono.just(ac2));
@@ -79,10 +82,29 @@ public class PositionControllerTest {
         when(positionService.getAircraftByReg("N12345")).thenReturn(Flux.just(ac1));
         when(positionService.getAircraftByReg("N54321")).thenReturn(Flux.just(ac2, ac3));
 
+        Hooks.onOperatorDebug();
+
     }
 
     @Test
     void getCurrentACPositions(){
+        StepVerifier.create(client.get().uri("/acpos").exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .returnResult(Aircraft.class)
+                .getResponseBody()
+        ).expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+
+    }
+
+    @Test
+    void getCurrentACPositions_Error(){
+
+
+        when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3).concatWith(Flux.error(new Throwable("Bad position report"))));
         StepVerifier.create(client.get().uri("/acpos").exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
