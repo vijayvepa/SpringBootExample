@@ -94,4 +94,29 @@ public class PositionControllerTest {
                 .verifyComplete();
 
     }
+
+    @Test
+    void getCurrentACPositionsById(){
+        StepVerifier.create(client.get().uri("/acpos/search?id="+id1).exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .returnResult(Aircraft.class)
+                .getResponseBody()
+        ).expectNext(ac1)
+                .verifyComplete();
+
+    }
+
+    @Test
+    void getCurrentACPositionsByReg(){
+        StepVerifier.create(client.get().uri("/acpos/search?reg=N54321").exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .returnResult(Aircraft.class)
+                .getResponseBody()
+        ).expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+
+    }
 }
