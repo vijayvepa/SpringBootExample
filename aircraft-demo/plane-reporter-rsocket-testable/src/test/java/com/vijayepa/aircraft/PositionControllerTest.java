@@ -14,6 +14,7 @@ import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -129,6 +130,26 @@ public class PositionControllerTest {
                 .expectNext(ac2)
                 .expectNext(ac3)
                 .verifyComplete();
+
+    }
+
+    @Test
+    void getCurrentACPositions_ErrorHook() {
+
+        Hooks.onOperatorDebug();
+
+        when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3).concatWith(Flux.error(new Throwable("Bad position report"))));
+        StepVerifier.create(client.get().uri("/acpos").exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+
+        Hooks.resetOnOperatorDebug();
 
     }
 
