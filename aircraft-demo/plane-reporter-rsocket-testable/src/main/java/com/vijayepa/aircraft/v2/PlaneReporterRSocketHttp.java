@@ -8,7 +8,7 @@ import reactor.core.publisher.Hooks;
 public class PlaneReporterRSocketHttp {
 
     public static void main(String[] args) {
-        Hooks.onOperatorDebug();
+        //Hooks.onOperatorDebug();
         SpringApplication.run(PlaneReporterRSocketHttp.class, args);
     }
 

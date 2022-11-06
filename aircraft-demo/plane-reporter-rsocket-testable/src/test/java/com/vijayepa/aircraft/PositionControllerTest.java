@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
@@ -15,7 +14,6 @@ import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -82,18 +80,18 @@ public class PositionControllerTest {
         when(positionService.getAircraftByReg("N12345")).thenReturn(Flux.just(ac1));
         when(positionService.getAircraftByReg("N54321")).thenReturn(Flux.just(ac2, ac3));
 
-        Hooks.onOperatorDebug();
+        //Hooks.onOperatorDebug();
 
     }
 
     @Test
-    void getCurrentACPositions(){
+    void getCurrentACPositions() {
         StepVerifier.create(client.get().uri("/acpos").exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .returnResult(Aircraft.class)
-                .getResponseBody()
-        ).expectNext(ac1)
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
                 .expectNext(ac2)
                 .expectNext(ac3)
                 .verifyComplete();
@@ -101,16 +99,33 @@ public class PositionControllerTest {
     }
 
     @Test
-    void getCurrentACPositions_Error(){
+    void getCurrentACPositions_ErrorCheckpoint() {
+
+
+        when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3).concatWith(Flux.error(new Throwable("Bad position report")))
+                .checkpoint());
+        StepVerifier.create(client.get().uri("/acpos").exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+
+    }
+    @Test
+    void getCurrentACPositions_Error() {
 
 
         when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3).concatWith(Flux.error(new Throwable("Bad position report"))));
         StepVerifier.create(client.get().uri("/acpos").exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .returnResult(Aircraft.class)
-                .getResponseBody()
-        ).expectNext(ac1)
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
                 .expectNext(ac2)
                 .expectNext(ac3)
                 .verifyComplete();
@@ -118,25 +133,46 @@ public class PositionControllerTest {
     }
 
     @Test
-    void getCurrentACPositionsById(){
-        StepVerifier.create(client.get().uri("/acpos/search?id="+id1).exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .returnResult(Aircraft.class)
-                .getResponseBody()
-        ).expectNext(ac1)
+    void getCurrentACPositions_ErrorWithDetails() {
+
+
+        when(positionService.getAllAircraft()).thenReturn(
+                Flux.just(ac1, ac2, ac3)
+                        .checkpoint("All aircraft: after all good positions reported.")
+                        .concatWith(Flux.error(new Throwable("Bad position report")))
+                .checkpoint("All aircraft: after appending bad position error"));
+        StepVerifier.create(client.get().uri("/acpos").exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
                 .verifyComplete();
 
     }
 
     @Test
-    void getCurrentACPositionsByReg(){
+    void getCurrentACPositionsById() {
+        StepVerifier.create(client.get().uri("/acpos/search?id=" + id1).exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
+                .verifyComplete();
+
+    }
+
+    @Test
+    void getCurrentACPositionsByReg() {
         StepVerifier.create(client.get().uri("/acpos/search?reg=N54321").exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .returnResult(Aircraft.class)
-                .getResponseBody()
-        ).expectNext(ac2)
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody())
+                .expectNext(ac2)
                 .expectNext(ac3)
                 .verifyComplete();
 
