@@ -36,6 +36,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     //endregion
 
+    //region reactor debug
+    implementation 'io.projectreactor:reactor-tools'
+    //endregion
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 }

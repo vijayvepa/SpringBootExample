@@ -17,6 +17,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import reactor.tools.agent.ReactorDebugAgent;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -150,6 +151,24 @@ public class PositionControllerTest {
                 .verifyComplete();
 
         Hooks.resetOnOperatorDebug();
+
+    }
+    @Test
+    void getCurrentACPositions_ErrorDebugAgent() {
+
+        ReactorDebugAgent.init();
+
+        when(positionService.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3).concatWith(Flux.error(new Throwable("Bad position report"))));
+        StepVerifier.create(client.get().uri("/acpos").exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody()
+                ).expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+
 
     }
 
